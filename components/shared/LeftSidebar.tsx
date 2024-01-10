@@ -2,10 +2,10 @@
 
 import { SignOutButton, SignedIn } from '@clerk/nextjs'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation'
 import { sidebarRoutes } from '@/constants'
+import Link from 'next/link'
 
 function LeftSidebar() {
   const currentPathname = usePathname();
@@ -14,13 +14,29 @@ function LeftSidebar() {
   return (
     <section className='sticky left-0 top-0 z-20 flex flex-col h-screen w-fit justify-between overflow-auto boder-r px-8 border-r-gray-950 bg-gray-900 pb-5 pt-28 max-md:hidden'>
       <div className='flex w-full flex-1 flex-col gap-6'>
-        {sidebarRoutes.map((route, index) => (
-          <Link href={route.route} key={index} className={`relative flex gap-3 p-4 rounded-lg justify-start ${currentPathname === route.route ? 'bg-violet-500' : ''}`}>
-            <Image src={route.image} alt={route.text} width={20} height={20} />
-            <p className='text-white font-normal'>{route.text}</p>
-          </Link>
-        ))}
+        {sidebarRoutes.map((route) => {
+          const isActive =
+            (currentPathname.includes(route.route) && route.route.length > 1) ||
+            currentPathname === route.route
+
+            return (
+              <Link 
+                href={route.route}
+                key={route.text}
+                className={`relative flex gap-3 p-4 rounded-lg justify-start ${isActive && 'bg-violet-500'}`}
+              >
+                <Image
+                  src={route.image}
+                  alt={route.text} 
+                  width={20} 
+                  height={20} 
+                />
+                <p className='text-white font-normal'>{route.text}</p>
+              </Link>
+            );
+        })}
       </div>
+      
       <div className="flex gap-5 items-center">
         <SignedIn>
           <SignOutButton>
