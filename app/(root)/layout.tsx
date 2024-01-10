@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import Navbar from '@/components/shared/Navbar'
 import LeftSidebar from '@/components/shared/LeftSidebar'
 import Footer from '@/components/shared/Footer'
+import RightSidebar from '@/components/shared/RightSidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +32,7 @@ export default function RootLayout({
                 {children}
               </div>
             </section>
-            {/* <RightSidebar /> */}
+            <RightSidebar />
           </main>
           <Footer />
         </body>
