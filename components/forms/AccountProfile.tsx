@@ -1,23 +1,28 @@
 "use client"
 
+import * as z from 'zod'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
-import { Button } from "@/components/ui/button"
+import { usePathname, useRouter } from 'next/navigation'
+import { ChangeEvent, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { zodResolver } from '@hookform/resolvers/zod'
-import { UserValidation } from '@/lib/validations/user'
-import * as z from 'zod'
-import Image from 'next/image'
-import { ChangeEvent, useState } from 'react'
+
 import { isBase64Image } from '@/lib/utils'
 import { useUploadThing } from '@/lib/uploadthing'
+
+import { UserValidation } from '@/lib/validations/user'
+import { updateUser } from '@/lib/actions/user.actions'
 
 
 interface Props {
@@ -33,8 +38,11 @@ interface Props {
 }
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
   const { startUpload } = useUploadThing("media");
+  
+  const [files, setFiles] = useState<File[]>([]);
 
   const form = useForm<z.infer<typeof UserValidation>>({
     resolver: zodResolver(UserValidation),
@@ -45,6 +53,36 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       bio: user?.bio || '',
     },
   });
+
+  const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    console.log('Submit button clicked', values);
+    const blob = values.profile_photo;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files)
+
+      if(imgRes && imgRes[0].url) {
+        values.profile_photo = imgRes[0].url;
+      }
+    }
+
+    await updateUser({
+      userId: user.id,
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      path: pathname,
+    });
+
+    if(pathname === '/profile/edit') {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
     e.preventDefault();
@@ -68,28 +106,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     }
   }
 
-  const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-    const blob = values.profile_photo;
-
-    const hasImageChanged = isBase64Image(blob);
-
-    if (hasImageChanged) {
-      const imgRes = await startUpload(files)
-
-      if(imgRes && imgRes[0].url) {
-        values.profile_photo = imgRes[0].url;
-      }
-    }
-
-    // UPDATE USER PROFILE HERE
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col justify-start gap-10"
+      <form 
+        className="flex flex-col justify-start gap-10"
+        onSubmit={form.handleSubmit(onSubmit)}
     >
-        {/* image upload */}
         <FormField
           control={form.control}
           name="profile_photo"
@@ -128,7 +150,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        {/* name */}
         <FormField
           control={form.control}
           name="name"
@@ -144,11 +165,11 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* username */}
         <FormField
           control={form.control}
           name="username"
@@ -164,11 +185,11 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* bio */}
         <FormField
           control={form.control}
           name="bio"
@@ -184,6 +205,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
