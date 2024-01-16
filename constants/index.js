@@ -15,7 +15,7 @@ export const sidebarRoutes = [
     text: "Activity"
   },
   {
-    route: "/home",
+    route: "/create-thread",
     image: "/assets/create.svg",
     text: "Create Thread"
   },

@@ -55,7 +55,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-    console.log('Submit button clicked', values);
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
@@ -111,7 +110,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       <form 
         className="flex flex-col justify-start gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
-    >
+      >
         <FormField
           control={form.control}
           name="profile_photo"
