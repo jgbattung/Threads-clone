@@ -1,9 +1,34 @@
-import { UserButton } from "@clerk/nextjs";
+import ThreadCard from "@/components/cards/ThreadCard";
+import { fetchThreads } from "@/lib/actions/thread.actions";
+import { UserButton, currentUser } from "@clerk/nextjs";
 
-export default function Home() {
+export default async function Home() {
+  const result = await fetchThreads(1, 30);
+  console.log(result)
+  const user = await currentUser();
+
   return (
-    <div>
-      <UserButton afterSignOutUrl="/" />
-    </div>
+    <>
+      <section className="mt-9 flex flex-col gap-10">
+        {result.threads.length === 0 ? (
+          <p className="text-center font-light text-white">No Threads found.</p>
+        ) : (
+          <>
+            {result.threads.map((thread) => (
+              <ThreadCard
+                key={thread._id}
+                id={thread._id}
+                currentUser={user?.id || ""}
+                parentId={thread.parentId}
+                content={thread.text}
+                author={thread.author}
+                createdAt={thread.createdAt}
+                comments={thread.children}
+              />
+            ))}
+          </>
+        )}
+      </section>
+    </>
   )
 }
