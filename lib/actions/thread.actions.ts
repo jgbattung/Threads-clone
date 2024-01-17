@@ -12,8 +12,9 @@ interface Params {
 }
 
 export async function createThread({ text, author, path }: Params) {
+  connectToDB();
+
   try {
-    connectToDB();
 
     const createThread = await Thread.create({
       text,
@@ -32,8 +33,9 @@ export async function createThread({ text, author, path }: Params) {
 }
 
 export async function fetchThreads(pageNumber = 1, pageSize = 20) {
+  connectToDB();
+
   try {
-    connectToDB();
 
     // calculate number of posts to skip
     // first page has no skips, so 0 * 20 = 0 skipped posts
@@ -63,5 +65,41 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
 
   } catch (error) {
     throw new Error(`Error loading Threads: ${error}`);
+  }
+}
+
+export async function fetchThreadById(id: string) {
+  connectToDB();
+
+  try {
+    const thread = await Thread.findById(id)
+      .populate({
+        path: 'author',
+        model: User,
+        select: "_id id name image"
+      })
+      .populate({
+        path: 'children',
+        populate: [
+          {
+            path: 'author',
+            model: User,
+            select: "_id id name parentId image"
+          },
+          {
+            path: 'children',
+            model: Thread,
+            populate: {
+              path: 'author',
+              model: User,
+              select: "_id id name parentId image"
+            }
+          }
+        ]
+      }).exec();
+
+      return thread;
+  } catch (error) {
+    throw new Error(`Error loading Thread: ${error}`);
   }
 }
