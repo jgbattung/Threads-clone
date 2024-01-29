@@ -103,3 +103,42 @@ export async function fetchThreadById(id: string) {
     throw new Error(`Error loading Thread: ${error}`);
   }
 }
+
+export async function addReplyToThread(
+  threadId: string,
+  replyText: string,
+  userId: string,
+  path: string
+) {
+  connectToDB();
+
+  try {
+    // find the thread being replied to by ID
+    const originalThread = await Thread.findById(threadId);
+
+    if(!originalThread) {
+      throw new Error("Thread not found");
+    }
+
+    // create the reply thread
+    const replyThread = new Thread({
+      text: replyText,
+      author: userId,
+      parentId: threadId,
+    })
+
+    // save the new thread
+    const savedReplyThread = await replyThread.save();
+
+    // update the thread with the new reply
+    originalThread.children.push(savedReplyThread._id)
+
+    // save the thread with the reply
+    await originalThread.save();
+
+    revalidatePath(path);
+
+  } catch (error: any) {
+    throw new Error(`Error adding reply: ${error.message}`);
+  }
+}
