@@ -31,7 +31,7 @@ const ThreadCard = ({
   isComment,
 }: Props) => {
   return (
-    <article className="flex w-full flex-col rounded-xl bg-gray-900 p-7">
+    <article className={`flex w-full flex-col rounded-xl bg-gray-900 p-7 ${!isComment ? 'xs:px-7' : 'bg-gray-950'}`}>
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
@@ -63,9 +63,9 @@ const ThreadCard = ({
               </div>
             </div>
 
-            {isComment && comments.length > 0 && (
+            {!isComment && comments.length > 0 && (
               <Link href={`/thread/${id}`}>
-                <p className="mt-3 font-extralight text-sm text-gray-300">{comments.length} replies</p>
+                <p className="mt-3 font-extralight text-sm text-gray-300">{comments.length > 1 ? `${comments.length} replies` : `1 reply`} </p>
               </Link>
             )}
 
