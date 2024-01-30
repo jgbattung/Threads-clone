@@ -1,6 +1,6 @@
 "use client"
 
-import { SignOutButton, SignedIn } from '@clerk/nextjs'
+import { SignOutButton, SignedIn, useAuth } from '@clerk/nextjs'
 import Image from 'next/image'
 import React from 'react'
 import { usePathname } from 'next/navigation'
@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 function LeftSidebar() {
   const currentPathname = usePathname();
+  const userId = useAuth();
 
 
   return (
@@ -16,24 +17,26 @@ function LeftSidebar() {
       <div className='flex w-full flex-1 flex-col gap-6'>
         {sidebarRoutes.map((route) => {
           const isActive =
-            (currentPathname.includes(route.route) && route.route.length > 1) ||
-            currentPathname === route.route
+          (currentPathname.includes(route.route) && route.route.length > 1) ||
+          currentPathname === route.route
+          
+          if (route.route === '/profile') route.route = `${route.route}/${userId.userId}`;
 
-            return (
-              <Link 
-                href={route.route}
-                key={route.text}
-                className={`relative flex gap-3 p-4 rounded-lg justify-start ${isActive && 'bg-violet-500'}`}
-              >
-                <Image
-                  src={route.image}
-                  alt={route.text} 
-                  width={20} 
-                  height={20} 
-                />
-                <p className='text-white font-normal'>{route.text}</p>
-              </Link>
-            );
+          return (
+            <Link 
+              href={route.route}
+              key={route.text}
+              className={`relative flex gap-3 p-4 rounded-lg justify-start ${isActive && 'bg-violet-500'}`}
+            >
+              <Image
+                src={route.image}
+                alt={route.text} 
+                width={20} 
+                height={20} 
+              />
+              <p className='text-white font-normal'>{route.text}</p>
+            </Link>
+          );
         })}
       </div>
       
