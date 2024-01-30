@@ -25,3 +25,8 @@ export const sidebarRoutes = [
     text: "Profile"
   },
 ]
+
+export const profileTabs = [
+  { value: "threads", label: "Threads", icon: "/assets/message.svg" },
+  { value: "replies", label: "Replies", icon: "/assets/reply-white.svg" }
+]
