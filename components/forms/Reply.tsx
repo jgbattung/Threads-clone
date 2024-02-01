@@ -69,7 +69,7 @@ const Reply = ({
                     alt="Profile photo"
                     width={48}
                     height={48}
-                    className='rounded-full object-cover'
+                    className='rounded-full object-cover h-12 w-12'
                   />
                 </FormLabel>
                 <FormControl className='border-none bg-transparent'>
