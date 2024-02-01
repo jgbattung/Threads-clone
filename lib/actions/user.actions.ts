@@ -104,6 +104,8 @@ export async function fetchUsers({
 
     const regex = new RegExp(searchString, "i");
 
+    // search query
+
     const query: FilterQuery<typeof User> = {
       id: { $ne: userId }
     }
@@ -132,5 +134,33 @@ export async function fetchUsers({
 
   } catch (error: any) {
     throw new Error(`Failed to find users: ${error.message}`)
+  }
+}
+
+export async function getActivity(userId: string) {
+  connectToDB();
+  try {
+
+    // find all threads by the user
+    const userThreads = await Thread.find({ author: userId })
+
+    // collect all the reply ids in the user's threads
+    const childThreadIds = userThreads.reduce((acc, userThread) => {
+      return acc.concat(userThread.children);
+    }, [])
+
+    const replies = await Thread.find({
+      _id: { $in: childThreadIds },
+      author: { $ne: userId }
+    }).populate({
+      path: 'author',
+      model: User,
+      select: 'name username image _id'
+    })
+
+    return replies;
+
+  } catch (error: any) {
+    throw new Error(`Failed to fetch activity: ${error.message}`);
   }
 }
