@@ -54,8 +54,10 @@ const ThreadCard = ({
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author.id }`} className="w-fit flex gap-1 items-center">
               <h4 className="cursor-pointer font-semibold text-white text-lg hover:underline transition-all">{author.name}</h4>
-              <p className="text-gray-500 text-lg font-extralight">@{author.username}</p>
-              <p className="text-gray-500 text-lg font-extralight"> · {formatRelativeTime(createdAt)}</p>
+              <p className="text-gray-400 text-lg font-thin">@{author.username}</p>
+              {!isDetailed && (
+                <p className="text-gray-400 text-lg font-thin"> · {formatRelativeTime(createdAt)}</p>
+              )}
             </Link>
 
             <p className="mt-2 text-white text-base font-light">{content}</p>
