@@ -69,17 +69,13 @@ const ThreadCard = ({
             <div className={`${isDetailed ? 'mt-1' : 'mt-5'} flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
-                <Link href={`/thread/${id}`}>
+                
+                <Link href={`/thread/${id}`} className="flex gap-1 items-center justify-center">
                   <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
+                  <p className="font-extralight text-sm text-gray-400 hover:text-gray-200 transition-colors">{comments.length > 0 ? `${comments.length}` : ''} </p>
                 </Link>
               </div>
             </div>
-
-            {!isComment && !isDetailed && comments.length > 0 && (
-              <Link href={`/thread/${id}`}>
-                <p className="mt-3 font-extralight text-sm text-gray-400 hover:text-gray-200 transition-colors">{comments.length > 1 ? `${comments.length} replies` : `1 reply`} </p>
-              </Link>
-            )}
 
           </div>
         </div>
