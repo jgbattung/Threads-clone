@@ -28,6 +28,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           author={thread.author}
           createdAt={thread.createdAt}
           comments={thread.children}
+          isDetailed
         />
       </div>
 
