@@ -33,3 +33,28 @@ export function formatRelativeTime(createdAt: string | Date) {
     return createdDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 };
+
+export function formatDateTime(createdAt: string): string {
+  const date = new Date(createdAt);
+
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  };
+
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  };
+
+  const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+  const dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+
+  const formattedTime = timeFormatter.format(date);
+  const formattedDate = dateFormatter.format(date);
+
+  return `${formattedTime} · ${formattedDate}`;
+}
+

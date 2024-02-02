@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { formatRelativeTime } from "@/lib/utils";
+import { formatDateTime, formatRelativeTime } from "@/lib/utils";
 
 interface Props {
   id: string;
@@ -20,6 +20,7 @@ interface Props {
     }
   }[];
   isComment?: boolean;
+  isDetailed?: boolean;
 }
 
 const ThreadCard = ({
@@ -31,6 +32,7 @@ const ThreadCard = ({
   createdAt,
   comments,
   isComment=false,
+  isDetailed=false,
 }: Props) => {
   return (
     <article className={`flex w-full flex-col rounded-xl bg-gray-900 p-7 ${!isComment ? 'xs:px-7' : 'bg-gray-950'}`}>
@@ -58,7 +60,11 @@ const ThreadCard = ({
 
             <p className="mt-2 text-white text-base font-light">{content}</p>
 
-            <div className="mt-5 flex flex-col gap-3">
+            {isDetailed && (
+              <p className="mt-7 mb-1 text-gray-500 font-light text-sm">{formatDateTime(createdAt)}</p>
+            )}
+
+            <div className={`${isDetailed ? 'mt-1' : 'mt-5'} flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
                 <Link href={`/thread/${id}`}>
@@ -67,9 +73,9 @@ const ThreadCard = ({
               </div>
             </div>
 
-            {!isComment && comments.length > 0 && (
+            {!isComment && !isDetailed && comments.length > 0 && (
               <Link href={`/thread/${id}`}>
-                <p className="mt-3 font-extralight text-sm text-gray-300">{comments.length > 1 ? `${comments.length} replies` : `1 reply`} </p>
+                <p className="mt-3 font-extralight text-sm text-gray-400 hover:text-gray-200 transition-colors">{comments.length > 1 ? `${comments.length} replies` : `1 reply`} </p>
               </Link>
             )}
 
