@@ -29,7 +29,7 @@ function Footer() {
                     height={20}
                     className="object-contain"
                   />
-                  <p className='text-white text-sm font-light'>
+                  <p className='text-white text-sm font-light max-sm:hidden'>
                     {route.text.split(/\s+/)[0]}
                   </p>
               </Link>
