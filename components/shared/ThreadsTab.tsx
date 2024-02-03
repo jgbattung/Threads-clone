@@ -28,8 +28,8 @@ const ThreadsTab = async ({
           content={thread.text}
           author={
             accountType === 'User' 
-              ? { name: result.name, image: result.image, id: result.id }
-              : { name: thread.author.name, image: thread.author.image, id: thread.author.id }
+              ? { name: result.name, image: result.image, id: result.id, username: result.username }
+              : { name: thread.author.name, image: thread.author.image, id: thread.author.id, username: result.username }
           }
           createdAt={thread.createdAt}
           comments={thread.children}
