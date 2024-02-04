@@ -1,4 +1,4 @@
-![image](https://github.com/jgbattung/Threads-clone/assets/100396329/fb61bab1-7832-4724-afdc-056b5ac0deef)# Threads Clone
+# Threads Clone
 
 ## Overview
 Threads Clone is a streamlined version of Meta's Threads app. This platform allows users to engage in discussions by creating and responding to threads. It also provides notifications for thread activity and enables users to explore threads from other users.
