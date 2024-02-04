@@ -50,7 +50,7 @@ The backend is driven by MongoDB with Mongoose for data management, and uploadth
  ```
  git clone https://github.com/jgbattung/Threads-clone.git
  ```
-2. Create a [clek](https://clerk.com/), [MongoDB](https://www.mongodb.com/), and [uploadting](https://uploadthing.com/) account to get your secret keys and other .env variables
+2. Create a [clerk](https://clerk.com/), [MongoDB](https://www.mongodb.com/), and [uploadting](https://uploadthing.com/) account to get your secret keys and other .env variables
 3. Create a `.env` file in the root directory of the project and add your IMDb API key.
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-key-here
