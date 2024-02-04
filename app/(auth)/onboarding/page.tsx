@@ -20,7 +20,7 @@ async function Page() {
   }
 
   return (
-    <main className="text-white mx-auto flex flex-col max-w-3xl justify-start px-10 py-20">
+    <main className="bg-gray-950 text-white mx-auto flex flex-col max-w-3xl justify-start px-10 py-20">
       <h1 className="text-3xl font-bold">Welcome to Threads!</h1>
       <p className="mt-3 text-base">Complete your profile to get started.</p>
 
