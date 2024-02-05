@@ -1,4 +1,8 @@
+"use client"
+
+import { currentUser } from '@clerk/nextjs';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
 interface Props {
@@ -18,6 +22,13 @@ const ProfileHeader = ({
   imgUrl,
   bio
 }: Props) => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    router.push(`/profile/${authUserId}/edit`)
+  }
+ 
   return (
     <div className='flex w-full flex-col justify-start'>
       {/* image and username */}
@@ -38,10 +49,18 @@ const ProfileHeader = ({
             </h2>
             <p className='text-gray-400 font-normal text-sm'>@{username}</p>
           </div>
+
         </div>
+        {pathname === `/profile/${authUserId}` && (
+          <div className='pr-4'>
+            <button className='rounded-3xl border border-gray-200 px-4 py-2 cursor-pointer hover:bg-gray-700 transition-all' onClick={handleClick}>
+              <p className='text-white'>Edit Profile</p>
+            </button>
+          </div>
+        )}
       </div>
 
-      <p className='mt-6 max-w-lg font-normal text-base text-gray-200'>{bio}</p>
+      <p className='mt-6 max-w-3xl font-normal text-base text-gray-200'>{bio}</p>
 
       <div className='mt-12 h-0.5 w-full bg-gray-800' />
     </div>
