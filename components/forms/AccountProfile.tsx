@@ -40,6 +40,7 @@ interface Props {
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+  const profilePath = `/profile/${user.id}`
   const { startUpload } = useUploadThing("media");
   
   const [files, setFiles] = useState<File[]>([]);
@@ -73,10 +74,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       name: values.name,
       bio: values.bio,
       image: values.profile_photo,
-      path: pathname,
+      path: profilePath,
     });
 
-    if(pathname === '/profile/edit') {
+    if(pathname === `/profile/${user.id}/edit`) {
       router.back();
     } else {
       router.push('/');
@@ -209,7 +210,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        <Button type="submit" className='bg-violet-500 hover:bg-violet-600 transition-colors font-semibold'>Submit</Button>
+        <Button type="submit" className='bg-violet-500 hover:bg-violet-600 transition-colors font-semibold'>{btnTitle}</Button>
       </form>
     </Form>
   )
