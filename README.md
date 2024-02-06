@@ -14,7 +14,7 @@ The backend is driven by MongoDB with Mongoose for data management, and uploadth
 ## Features
 1. **User Authentication**: Secure registration and login system enabling users to participate in thread creation, replies, and viewing. Users are also directing to an onboarding page where they can setup their user information.
 2. **Create and Reply to Threads**: Users can express their thoughts by initiating new threads or contributing to existing discussions with replies.
-3. **Profile**: Profiles showcase individual user's threads, offering insights into their activity and interests.
+3. **Profile**: Profiles showcase individual user's threads, offering insights into their activity and interests. Users can also edit their profiles in side the Profile page.
 4. **Notifications**: The Activities section alerts users to new replies on their threads, facilitating ongoing engagement and conversation.
 5. **Search**: Through Search, users can see all other existing users of Threads.
 6. **Responsive Layout**: This Threads clone app can be used in big monitors, regular laptop screens, and even small phone screens.
@@ -37,7 +37,7 @@ The backend is driven by MongoDB with Mongoose for data management, and uploadth
 ![reply](https://github.com/jgbattung/Threads-clone/assets/100396329/cd370e9a-cb9e-4cce-a5c8-3780a6e16797)
 
 ### Profile
-![profile](https://github.com/jgbattung/Threads-clone/assets/100396329/ba08d167-7496-4c05-b41e-53212d7d4ec5)
+![profile](https://github.com/jgbattung/Threads-clone/assets/100396329/e52dbe24-5a3a-46be-b689-76c0dc3b82e5)
 
 ### Activities
 ![activities](https://github.com/jgbattung/Threads-clone/assets/100396329/66ec39e2-d844-4f7b-9613-ae3b12c007a0)
