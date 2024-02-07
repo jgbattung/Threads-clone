@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { ThreadValidation } from '@/lib/validations/thread'
 import { createThread } from '@/lib/actions/thread.actions'
 import path from 'path'
+import useLoadingStore from '@/lib/store'
 
 // import { UserValidation } from '@/lib/validations/user'
 // import { updateUser } from '@/lib/actions/user.actions'
@@ -37,6 +38,7 @@ interface Props {
 function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { isLoading, setIsLoading } = useLoadingStore();
   
   const form = useForm<z.infer<typeof ThreadValidation>>({
     resolver: zodResolver(ThreadValidation),
@@ -47,13 +49,14 @@ function PostThread({ userId }: { userId: string }) {
   });
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+    setIsLoading(true);
     await createThread({
       text: values.thread,
       author: userId,
       path: pathname,
     });
-
     router.push("/");
+    setIsLoading(false);
   }
 
   return (
@@ -83,7 +86,13 @@ function PostThread({ userId }: { userId: string }) {
               </FormItem>
             )}
           />
-          <Button type="submit" className='bg-violet-500 hover:bg-violet-600 transition-colors'>Post Thread</Button>
+          <Button 
+            type="submit"
+            className="bg-violet-500 hover:bg-violet-600 transition-colors"
+            disabled={isLoading}
+          >
+            Post Thread
+          </Button>
         </form>
       </Form>
     </div>
