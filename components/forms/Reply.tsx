@@ -18,6 +18,7 @@ import { Button } from '../ui/button';
 import Image from "next/image";
 import { Textarea } from '../ui/textarea';
 import { addReplyToThread } from '@/lib/actions/thread.actions';
+import useLoadingStore from '@/lib/store';
 
 interface Props {
   threadId: string;
@@ -32,6 +33,7 @@ const Reply = ({
 }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { isLoading, setIsLoading } = useLoadingStore();
   
   const form = useForm<z.infer<typeof ReplyValidation>>({
     resolver: zodResolver(ReplyValidation),
@@ -41,6 +43,7 @@ const Reply = ({
   });
 
   const onSubmit = async (values: z.infer<typeof ReplyValidation>) => {
+    setIsLoading(true);
     await addReplyToThread(
       threadId,
       values.thread,
@@ -49,6 +52,7 @@ const Reply = ({
     );
 
     form.reset();
+    setIsLoading(false);
   }
   
   return (
@@ -85,7 +89,13 @@ const Reply = ({
               </FormItem>
             )}
           />
-          <Button type="submit" className='rounded-3xl px-8 py-2 bg-violet-500 font-light text-sm hover:bg-violet-600 transition-colors'>Reply</Button>
+          <Button
+            type="submit" 
+            className='rounded-3xl px-8 py-2 bg-violet-500 font-light text-sm hover:bg-violet-600 transition-colors'
+            disabled={isLoading}
+          >
+            Reply
+          </Button>
         </form>
       </Form>
     </div>

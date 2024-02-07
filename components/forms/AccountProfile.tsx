@@ -23,6 +23,7 @@ import { useUploadThing } from '@/lib/uploadthing'
 
 import { UserValidation } from '@/lib/validations/user'
 import { updateUser } from '@/lib/actions/user.actions'
+import useLoadingStore from '@/lib/store'
 
 
 interface Props {
@@ -42,6 +43,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   const pathname = usePathname();
   const profilePath = `/profile/${user.id}`
   const { startUpload } = useUploadThing("media");
+  const { isLoading, setIsLoading } = useLoadingStore(); 
   
   const [files, setFiles] = useState<File[]>([]);
 
@@ -56,6 +58,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+    setIsLoading(true);
     const blob = values.profile_photo;
 
     const hasImageChanged = isBase64Image(blob);
@@ -82,6 +85,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     } else {
       router.push('/');
     }
+    setIsLoading(false);
   };
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
@@ -210,7 +214,13 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
-        <Button type="submit" className='bg-violet-500 hover:bg-violet-600 transition-colors font-semibold'>{btnTitle}</Button>
+        <Button 
+          type="submit" 
+          className='bg-violet-500 hover:bg-violet-600 transition-colors font-semibold'
+          disabled={isLoading}
+          >
+            {btnTitle}
+          </Button>
       </form>
     </Form>
   )
