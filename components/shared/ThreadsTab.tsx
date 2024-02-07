@@ -18,7 +18,7 @@ const ThreadsTab = async ({
   if(!result) redirect('/')
 
   return (
-    <section className="mt-9 flex flex-col gap-10">
+    <section className="mt-9 flex flex-col gap-9 max-md:gap-3 max-lg:gap-6">
       {result.threads.map((thread: any) => (
         <ThreadCard 
           key={thread._id}
@@ -29,7 +29,7 @@ const ThreadsTab = async ({
           author={
             accountType === 'User' 
               ? { name: result.name, image: result.image, id: result.id, username: result.username }
-              : { name: thread.author.name, image: thread.author.image, id: thread.author.id, username: result.username }
+              : { name: thread.author.name, image: thread.author.image, id: thread.author.id, username: thread.author.username }
           }
           createdAt={thread.createdAt}
           comments={thread.children}
