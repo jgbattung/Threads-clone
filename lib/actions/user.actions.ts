@@ -63,13 +63,14 @@ export async function fetchUserThreads(userId: string) {
       .populate({
         path: 'threads',
         model: Thread,
+        options: { sort: { 'createdAt': -1 } },
         populate: {
           path: 'children',
           model: Thread,
           populate: {
             path: 'author',
             model: User,
-            select: "name image id"
+            select: "name image id username"
           }
         }
       });
