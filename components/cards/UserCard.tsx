@@ -26,7 +26,7 @@ const UserCard = ({
           className="rounded-full object-cover h-12 w-12"
         />
         <div className="flex-1 text-ellipsis">
-          <h4 className="font-bold text-lg text-gray-200">{name}</h4>
+          <h4 className="font-bold text-lg text-gray-200 hover:underline transition-all">{name}</h4>
           <p className="font-light text-sm text-gray-400">@{username}</p>
           <p className="text-gray-200 font-normal text-base">{bio}</p>
         </div>

@@ -32,15 +32,18 @@ const Page = async () => {
         ) : (
           <>
             {result.users.map((person) => (
-              <Link href={`/profile/${person.id }`} key={person.id}>
-                <UserCard
-                  id={person.id}
-                  name={person.name}
-                  username={person.username}
-                  imgUrl={person.image}
-                  bio={person.bio}
-                />
-              </Link>
+              <>
+                <Link href={`/profile/${person.id }`} key={person.id}>
+                  <UserCard
+                    id={person.id}
+                    name={person.name}
+                    username={person.username}
+                    imgUrl={person.image}
+                    bio={person.bio}
+                  />
+                </Link>
+                <div className="border border-gray-800 w-full" /> 
+              </>
             ))}
           </>
         )}
