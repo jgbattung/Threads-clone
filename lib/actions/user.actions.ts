@@ -81,6 +81,35 @@ export async function fetchUserThreads(userId: string) {
   }
 }
 
+export async function fetchUserReplies(userId: string) {
+  connectToDB();
+  
+  try {
+    // find threads by the user that have a parentId (meaning it is a reply)
+    const replies = Thread.find({ 
+      author: userId,
+      parentId: { $exists: true } 
+    })
+      .populate({
+        path: 'author',
+        model: User,
+        select: '_id id name image username'
+      })
+      .populate({
+        path: 'children',
+        model: Thread,
+        populate: {
+          path: 'author',
+          model: User
+        }
+      });
+
+    return replies;
+  } catch (error) {
+    throw new Error(`Failed to fetch user replies: ${error}`);
+  }
+}
+
 interface FetchUsersParams {
   userId: string,
   searchString?: string;
