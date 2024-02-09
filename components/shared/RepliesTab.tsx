@@ -12,7 +12,6 @@ const RepliesTab = async ({
   accountId,
 }: Props) => {
   let replies = await fetchUserReplies(accountId);
-  console.log(`Replies: ${replies}`)
 
   return (
     <section className="mt-9 flex flex-col gap-9 max-md:gap-3 max-lg:gap-6">
