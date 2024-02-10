@@ -88,7 +88,7 @@ export async function fetchUserReplies(userId: string) {
     // find threads by the user that have a parentId (meaning it is a reply)
     const replies = Thread.find({ 
       author: userId,
-      parentId: { $exists: true } 
+      parentId: { $exists: true }
     })
       .populate({
         path: 'author',
@@ -110,7 +110,8 @@ export async function fetchUserReplies(userId: string) {
           path: 'author',
           model: User
         }
-      });
+      })
+      .sort({ createdAt: -1 });
 
     return replies;
   } catch (error) {
