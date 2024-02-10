@@ -5,14 +5,24 @@ import { formatDateTime, formatRelativeTime } from "@/lib/utils";
 interface Props {
   id: string;
   currentUser: string;
-  parentId: string | null;
+  parentId: {
+    _id: string;
+    text: string;
+    author: {
+      id: string;
+      name: string;
+      username: string
+      image: string;
+    };
+
+  }
   content: string;
   author: {
     name: string;
     image: string;
     id: string;
     username: string;
-  }
+  };
   createdAt: string;
   comments: {
     author: {
@@ -21,19 +31,50 @@ interface Props {
   }[];
   isComment?: boolean;
   isDetailed?: boolean;
+  isReplyView?: boolean
 }
 
 const ThreadCard = ({
   id,
+  currentUser,
+  parentId,
   content,
   author,
   createdAt,
   comments,
   isComment=false,
   isDetailed=false,
+  isReplyView=false,
 }: Props) => {
   return (
     <article className={`flex w-full flex-col rounded-xl bg-gray-900 p-7 ${!isComment ? 'xs:px-7' : 'bg-gray-950'}`}>
+      {isReplyView && (
+        <Link href={`/thread/${parentId._id}`} className="hover:underline text-gray-400">
+          <div className="flex text-left mb-4 gap-2">
+            <Image
+              src='/assets/arrow-left-up.svg'
+              alt='arrow'
+              width={18}
+              height={18}
+              className="relative top-0"
+            />
+            <p className="text-gray-400 text-sm font-extralight">...replying to 
+              <span className="text-purple-400">
+                <Link href={`/profile/${parentId.author.id}`} className="pl-1 hover:underline">
+                  @{parentId.author.username}
+                </Link>
+              </span>
+            </p>
+            <Image 
+              src={parentId.author.image}
+              alt='profile photo'
+              width={20}
+              height={20}
+              className="rounded-full object-cover max-h-5"
+            />
+          </div>
+        </Link>
+      )}
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
