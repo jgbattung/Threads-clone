@@ -96,6 +96,14 @@ export async function fetchUserReplies(userId: string) {
         select: '_id id name image username'
       })
       .populate({
+        path: 'parentId',
+        model: Thread,
+        populate: {
+          path: 'author',
+          model: User
+        }
+      })
+      .populate({
         path: 'children',
         model: Thread,
         populate: {
