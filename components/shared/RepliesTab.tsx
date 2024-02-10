@@ -28,6 +28,7 @@ const RepliesTab = async ({
             author={ { name: reply.author.name, image: reply.author.image, id: reply.author.id, username: reply.author.username } }
             createdAt={reply.createdAt}
             comments={reply.children}
+            isReplyView
           />
         ))
       )} 
