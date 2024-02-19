@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
     }
   ],
   onboarded: { type: Boolean, default: false },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thread'
+    }
+  ]
 });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
