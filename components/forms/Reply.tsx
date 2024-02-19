@@ -18,7 +18,7 @@ import { Button } from '../ui/button';
 import Image from "next/image";
 import { Textarea } from '../ui/textarea';
 import { addReplyToThread } from '@/lib/actions/thread.actions';
-import useLoadingStore from '@/lib/store';
+import { useLoadingStore } from '@/lib/store';
 
 interface Props {
   threadId: string;
