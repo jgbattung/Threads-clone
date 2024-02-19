@@ -23,6 +23,7 @@ export default async function Home() {
                 author={thread.author}
                 createdAt={thread.createdAt}
                 comments={thread.children}
+                likes={thread.likes}
               />
             ))}
           </>

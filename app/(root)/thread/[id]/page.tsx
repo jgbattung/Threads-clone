@@ -29,6 +29,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           createdAt={thread.createdAt}
           comments={thread.children}
           isDetailed
+          likes={thread.likes}
         />
       </div>
 
@@ -52,6 +53,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             createdAt={child.createdAt}
             comments={child.children}
             isComment
+            likes={thread.likes}
           />
         ))}
       </div>

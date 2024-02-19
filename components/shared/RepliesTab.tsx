@@ -29,6 +29,7 @@ const RepliesTab = async ({
             createdAt={reply.createdAt}
             comments={reply.children}
             isReplyView
+            likes={reply.likes}
           />
         ))
       )} 
