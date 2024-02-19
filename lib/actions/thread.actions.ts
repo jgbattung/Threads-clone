@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
+import mongoose from "mongoose";
 
 interface Params {
   text: string,
@@ -140,5 +141,27 @@ export async function addReplyToThread(
 
   } catch (error: any) {
     throw new Error(`Error adding reply: ${error.message}`);
+  }
+}
+
+export async function likeThread(userId: string, threadId: string) {
+  connectToDB();
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { likes: threadId }
+    }, { new: true, session });
+
+    await Thread.findByIdAndUpdate(threadId, {
+      $addToSet: { likes: userId }
+    }, { new: true, session });
+
+    await session.commitTransaction();
+  } catch (error) {
+    await session.abortTransaction();
+    throw new Error(`Failed to like Thread: ${error}`);
+  } finally {
+    session.endSession();
   }
 }
