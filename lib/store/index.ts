@@ -13,17 +13,4 @@ const useLoadingStore = create<LoadingState & LoadingAction>()((set) => ({
   setIsLoading: (isLoading: boolean) => set(() => ({ isLoading })),
 }));
 
-// type LikeState = {
-//   isLiked: boolean;
-// }
-
-// type LikeAction = {
-//   toggleLike: () => void;
-// }
-
-// const useLikedStore = create<LikeState & LikeAction>()((set) => ({
-//   isLiked: false,
-//   toggleLike: () => set((state) => ({ isLiked: !state.isLiked })),
-// }));
-
 export { useLoadingStore };
