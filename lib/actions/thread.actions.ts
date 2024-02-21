@@ -144,24 +144,27 @@ export async function addReplyToThread(
   }
 }
 
-export async function likeThread(userId: string, threadId: string) {
+export async function likeThread(userId: string, threadId: string, shouldLike: boolean) {
   connectToDB();
   const session = await mongoose.startSession();
-  session.startTransaction();
   try {
-    await User.findByIdAndUpdate(userId, {
-      $addToSet: { likes: threadId }
-    }, { new: true, session });
-
-    await Thread.findByIdAndUpdate(threadId, {
-      $addToSet: { likes: userId }
-    }, { new: true, session });
-
+    session.startTransaction();
+    // if user is liking a thread
+    if (shouldLike) {
+      // Add userId to thread.likes and theadId to user.likes
+      await Thread.findByIdAndUpdate(threadId, { $addToSet: { likes: userId } }, { session });
+      await User.findByIdAndUpdate(userId, { $addToSet: { likes: threadId } }, { session });
+    // if user is unliking a thread
+    } else {
+      // Remove userId from thread.likes and threadId from user.likes
+      await Thread.findByIdAndUpdate(threadId, { $pull: { likes: userId } }, { session });
+      await User.findByIdAndUpdate(userId, { $pull: { likes: threadId } }, { session });
+    }
     await session.commitTransaction();
-  } catch (error) {
+  } catch (error: any) {
     await session.abortTransaction();
-    throw new Error(`Failed to like Thread: ${error}`);
+    throw new Error("Error liking thread:", error);
   } finally {
     session.endSession();
   }
-}
+};
