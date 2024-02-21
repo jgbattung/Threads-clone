@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDateTime, formatRelativeTime } from "@/lib/utils";
+import LikesButton from "../shared/LikesButton";
 
 interface Props {
   id: string;
@@ -112,7 +113,11 @@ const ThreadCard = ({
             <div className={`${isDetailed ? 'mt-1' : 'mt-5'} flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 <div className="flex gap-1 items-center justify-center">
-                  <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
+                  <LikesButton 
+                    threadId={id}
+                    likes={likes}
+                    currentUser={currentUser}
+                  />
                   <p className="font-extralight text-sm text-gray-400 hover:text-gray-200 transition-colors">{likes.length > 0 ? `${likes.length}` : ''} </p>
                 </div>
                 
