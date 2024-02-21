@@ -14,6 +14,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   if(!user) return null;
 
   const userInfo = await fetchUser(params.id);
+  const loggedInUserInfo = await fetchUser(user.id);
 
   if(!userInfo?.onboarded) redirect('/onboarding');
 
@@ -51,14 +52,14 @@ const Page = async ({ params }: { params: { id: string } }) => {
           </TabsList>
           <TabsContent value="threads" className="w-full text-gray-200">
             <ThreadsTab 
-              currentUserId={user.id}
+              currentUserId={loggedInUserInfo._id}
               accountId={userInfo.id}
               accountType="User"
             />
           </TabsContent>
           <TabsContent value="replies" className="text-gray-200">
             <RepliesTab
-              currentUserId={user.id}
+              currentUserId={loggedInUserInfo._id}
               accountId={userInfo._id}
             />
           </TabsContent>
