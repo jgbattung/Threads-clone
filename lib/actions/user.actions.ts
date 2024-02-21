@@ -194,6 +194,7 @@ export async function getActivity(userId: string) {
       model: User,
       select: 'name username image _id'
     })
+    .sort({ createdAt: -1 });
 
     return replies;
 
