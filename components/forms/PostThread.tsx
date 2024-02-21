@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { ThreadValidation } from '@/lib/validations/thread'
 import { createThread } from '@/lib/actions/thread.actions'
 import path from 'path'
-import useLoadingStore from '@/lib/store'
+import { useLoadingStore } from '@/lib/store'
 
 // import { UserValidation } from '@/lib/validations/user'
 // import { updateUser } from '@/lib/actions/user.actions'

@@ -23,7 +23,7 @@ import { useUploadThing } from '@/lib/uploadthing'
 
 import { UserValidation } from '@/lib/validations/user'
 import { updateUser } from '@/lib/actions/user.actions'
-import useLoadingStore from '@/lib/store'
+import { useLoadingStore } from '@/lib/store'
 
 
 interface Props {

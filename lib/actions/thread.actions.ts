@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
+import mongoose from "mongoose";
 
 interface Params {
   text: string,
@@ -142,3 +143,28 @@ export async function addReplyToThread(
     throw new Error(`Error adding reply: ${error.message}`);
   }
 }
+
+export async function likeThread(userId: string, threadId: string, shouldLike: boolean) {
+  connectToDB();
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+    // if user is liking a thread
+    if (shouldLike) {
+      // Add userId to thread.likes and theadId to user.likes
+      await Thread.findByIdAndUpdate(threadId, { $addToSet: { likes: userId } }, { session });
+      await User.findByIdAndUpdate(userId, { $addToSet: { likes: threadId } }, { session });
+    // if user is unliking a thread
+    } else {
+      // Remove userId from thread.likes and threadId from user.likes
+      await Thread.findByIdAndUpdate(threadId, { $pull: { likes: userId } }, { session });
+      await User.findByIdAndUpdate(userId, { $pull: { likes: threadId } }, { session });
+    }
+    await session.commitTransaction();
+  } catch (error: any) {
+    await session.abortTransaction();
+    throw new Error("Error liking thread:", error);
+  } finally {
+    session.endSession();
+  }
+};

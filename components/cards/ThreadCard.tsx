@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDateTime, formatRelativeTime } from "@/lib/utils";
+import LikesButton from "../shared/LikesButton";
 
 interface Props {
   id: string;
@@ -31,7 +32,8 @@ interface Props {
   }[];
   isComment?: boolean;
   isDetailed?: boolean;
-  isReplyView?: boolean
+  isReplyView?: boolean;
+  likes: string[];
 }
 
 const ThreadCard = ({
@@ -45,7 +47,9 @@ const ThreadCard = ({
   isComment=false,
   isDetailed=false,
   isReplyView=false,
+  likes,
 }: Props) => {
+
   return (
     <article className={`flex w-full flex-col rounded-xl bg-gray-900 p-7 ${!isComment ? 'xs:px-7' : 'bg-gray-950'}`}>
       {isReplyView && (
@@ -108,7 +112,14 @@ const ThreadCard = ({
 
             <div className={`${isDetailed ? 'mt-1' : 'mt-5'} flex flex-col gap-3`}>
               <div className="flex gap-3.5">
-                <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
+                <div className="flex gap-1 items-center justify-center">
+                  <LikesButton 
+                    threadId={id}
+                    likes={likes}
+                    currentUser={currentUser}
+                  />
+                  <p className="font-extralight text-sm text-gray-400 hover:text-gray-200 transition-colors">{likes.length > 0 ? `${likes.length}` : ''} </p>
+                </div>
                 
                 <Link href={`/thread/${id}`} className="flex gap-1 items-center justify-center">
                   <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain filter hover:brightness-0 hover:invert hover:transition-colors" />
