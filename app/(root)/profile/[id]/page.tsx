@@ -1,3 +1,4 @@
+import LikesTab from "@/components/shared/LikesTab";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import RepliesTab from "@/components/shared/RepliesTab";
 import ThreadsTab from "@/components/shared/ThreadsTab";
@@ -61,6 +62,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
             <RepliesTab
               currentUserId={loggedInUserInfo._id}
               accountId={userInfo._id}
+            />
+          </TabsContent>
+          <TabsContent value="likes">
+            <LikesTab 
+              currentUserId={loggedInUserInfo._id}
+              accountId={userInfo.id}
             />
           </TabsContent>
         </Tabs>
