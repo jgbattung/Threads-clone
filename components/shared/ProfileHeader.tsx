@@ -33,7 +33,7 @@ const ProfileHeader = ({
     <div className='flex w-full flex-col justify-start'>
       {/* image and username */}
       <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-3 max-sm:flex-col max-sm:items-start'>
           <div className='relative h-20 w-20 object-cover'>
             <Image
               src={imgUrl}
@@ -52,9 +52,9 @@ const ProfileHeader = ({
 
         </div>
         {pathname === `/profile/${authUserId}` && (
-          <div className='pr-4'>
-            <button className='rounded-3xl border border-gray-200 px-4 py-2 cursor-pointer hover:bg-gray-700 transition-all' onClick={handleClick}>
-              <p className='text-white'>Edit Profile</p>
+          <div>
+            <button className='rounded-3xl border border-gray-200 px-4 py-2 max-sm:px-3 max-sm:py-1.5 cursor-pointer hover:bg-gray-700 transition-all' onClick={handleClick}>
+              <span className='text-white max-sm:text-sm'>Edit Profile</span>
             </button>
           </div>
         )}

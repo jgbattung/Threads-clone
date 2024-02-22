@@ -91,7 +91,7 @@ const Reply = ({
           />
           <Button
             type="submit" 
-            className='rounded-3xl px-8 py-2 bg-violet-500 font-light text-sm hover:bg-violet-600 transition-colors'
+            className='rounded-3xl px-8 py-2 bg-violet-500 font-light text-sm hover:bg-violet-600 transition-colors max-sm:w-full'
             disabled={isLoading}
           >
             Reply

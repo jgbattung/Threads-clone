@@ -26,15 +26,16 @@ function LeftSidebar() {
             <Link 
               href={route.route}
               key={route.text}
-              className={`relative flex gap-3 p-4 rounded-lg justify-start ${isActive && 'bg-violet-500'}`}
+              className={`relative flex gap-3 p-4 rounded-lg justify-start ${isActive && 'bg-violet-500'} max-lg:justify-center`}
             >
               <Image
                 src={route.image}
                 alt={route.text} 
                 width={20} 
                 height={20} 
+                className='max-lg:w-7 max-lg:h-7'
               />
-              <p className='text-white font-normal'>{route.text}</p>
+              <p className='text-white font-normal max-lg:hidden'>{route.text}</p>
             </Link>
           );
         })}
