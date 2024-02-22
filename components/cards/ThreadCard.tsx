@@ -95,22 +95,44 @@ const ThreadCard = ({
             <div className="relative mt-2 w-0.5 grow rounded-full bg-gray-700" />
           </div>
 
-          <div className="flex w-full flex-col">
-            <Link href={`/profile/${author.id }`} className="w-fit flex gap-1 items-center">
-              <h4 className="cursor-pointer font-semibold text-white text-lg hover:underline transition-all">{author.name}</h4>
-              <p className="text-gray-400 text-lg font-thin">@{author.username}</p>
-              {!isDetailed && (
-                <p className="text-gray-400 text-lg font-thin"> · {formatRelativeTime(createdAt)}</p>
-              )}
-            </Link>
-
-            <p className="mt-2 text-white text-base font-light">{content}</p>
+          <div className="flex items-stretch w-full flex-col">
+            <div className="flex flex-col sm:flex-row items-start w-full gap-1">
+              <div className="shrink-0">
+                {/* name */}
+                <Link href={`/profile/${author.id }`} className="w-fit block">
+                  <h4 className="cursor-pointer font-semibold text-white text-lg hover:underline transition-all max-md:text-sm max-lg:text-base">{author.name}</h4>
+                </Link>
+              </div>
+              <div className="flex-1 min-w-0">
+                {/* username and date*/}
+                <div className="flex items-center gap-1 flex-wrap">
+                  {/* username */}
+                  <Link href={`/profile/${author.id }`} className="w-fit">
+                    <span className="text-gray-400 text-lg font-thin max-md:text-sm max-lg:text-base text-clip">@{author.username}</span>
+                  </Link>
+                  {/* date */}
+                  <div>
+                    {!isDetailed && (
+                      <span className="text-gray-400 text-lg font-thin max-md:text-sm max-lg:text-base"> · {formatRelativeTime(createdAt)}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="cursor-pointer overflow-x-hidden overflow-y-hidden">
+              <div className="mt-2 text-white text-base font-light max-md:text-sm max-lg:text-base">
+                <span className="break-word">{content}</span>
+              </div>
+            </div>
 
             {isDetailed && (
-              <p className="mt-7 mb-1 text-gray-500 font-light text-sm">{formatDateTime(createdAt)}</p>
+              <div className="mt-6 mb-1 text-gray-500 font-light text-sm max-sm:mt-2 max-sm:text-xs max-md:mt-4">
+                <span>{formatDateTime(createdAt)}</span>
+              </div>
             )}
 
-            <div className={`${isDetailed ? 'mt-1' : 'mt-5'} flex flex-col gap-3`}>
+            <div className={`${isDetailed ? 'mt-1' : 'mt-5 max-md:mt-3'} flex flex-col gap-3`}>
               <div className="flex gap-3.5">
                 <div className="flex gap-1 items-center justify-center">
                   <LikesButton 
