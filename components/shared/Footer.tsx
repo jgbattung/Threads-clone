@@ -10,7 +10,7 @@ function Footer() {
 
   return (
     <section className="fixed bottom-0 z-10 w-full rounder-t-3xl p-4 backdrop-blur-lg bg-gray-900 md:hidden">
-      <div className="flex items-center justify-between gap-3 xs:gap-5">
+      <div className="flex items-center justify-around gap-3 xs:gap-5">
         {sidebarRoutes.map((route) => {
           const isActive =
             (currentPathname.includes(route.route) && route.route.length > 1) ||
@@ -20,13 +20,13 @@ function Footer() {
               <Link 
                 href={route.route} 
                 key={route.text} 
-                className={`relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:py-2.5 ${isActive && 'bg-violet-500'}`}
+                className={`relative flex flex-col justify-around items-center gap-2 rounded-lg p-3 sm:flex-1 sm:py-2.5 ${isActive && 'bg-violet-500'}`}
               >
                   <Image 
                     src={route.image}
                     alt={route.text}
-                    width={20}
-                    height={20}
+                    width={22}
+                    height={22}
                     className="object-contain"
                   />
                   <p className='text-white text-sm font-light max-sm:hidden'>
