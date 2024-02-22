@@ -60,7 +60,7 @@ const ProfileHeader = ({
         )}
       </div>
 
-      <p className='mt-6 max-w-3xl font-normal text-base text-gray-200'>{bio}</p>
+      <p className='mt-6 max-w-3xl font-normal text-base text-gray-200 max-sm:text-sm'>{bio}</p>
 
       <div className='mt-12 h-0.5 w-full bg-gray-800' />
     </div>
