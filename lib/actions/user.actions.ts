@@ -202,3 +202,37 @@ export async function getActivity(userId: string) {
     throw new Error(`Failed to fetch activity: ${error.message}`);
   }
 }
+
+export async function fetchUserLikes (userId: string) {
+  connectToDB();
+
+  try {
+    // find the array of likes of the user
+    const likes = await User.findOne({ id: userId })
+      .select('likes -_id')
+      .populate({
+        path: 'likes',
+        model: 'Thread',
+        populate: [
+          {
+            path: 'author',
+            model: 'User',
+            select: 'name image id username'
+          },
+          {
+            path: 'parentId',
+            model: 'Thread',
+            populate: {
+              path: 'author',
+              model: 'User',
+              select: 'name image id username'
+            },
+          },
+        ],
+        options: { sort: { 'createdAt': -1 } },
+      });
+    return likes;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user's liked threads: ${error.message}`)
+  }
+}
