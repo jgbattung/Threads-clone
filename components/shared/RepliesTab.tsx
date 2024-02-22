@@ -14,7 +14,7 @@ const RepliesTab = async ({
   let replies = await fetchUserReplies(accountId);
 
   return (
-    <section className="mt-9 flex flex-col gap-9 max-md:gap-3 max-lg:gap-6">
+    <section className="mt-9 flex flex-col gap-9 max-md:gap-3 max-lg:gap-6 items-center">
       {!replies || replies.length === 0 ? (
         <p className="text-gray-200 text-lg font-semibold">No replies yet.</p>
       ) : (

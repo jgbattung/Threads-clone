@@ -28,5 +28,6 @@ export const sidebarRoutes = [
 
 export const profileTabs = [
   { value: "threads", label: "Threads", icon: "/assets/message.svg" },
-  { value: "replies", label: "Replies", icon: "/assets/reply-white.svg" }
+  { value: "replies", label: "Replies", icon: "/assets/reply-white.svg" },
+  { value: "likes", label: "Likes", icon: "/assets/heart-white.svg" }
 ]
